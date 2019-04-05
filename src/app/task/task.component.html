@@ -1,0 +1,44 @@
+<div [hidden]="submitted">
+    <h3>Add Task</h3>
+    <form #addTaskForm="ngForm">
+        <div class="form-group">
+           <label for="id">Id</label>
+           <input type="number" class="form-control" id="id"
+           placeholder="Enter Id"
+           required
+           [(ngModel)]="task.id" name="id" #id="ngModel">
+           <div [hidden]="id.valid || id.pristine"
+              class="alert alert-danger">
+               Id is required
+           </div>
+        </div>
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" id="name" placeholder="Enter Task Name"
+                required 
+                [(ngModel)]="task.name" name="name" #name="ngModel">
+                <div [hidden]="name.valid || name.pristine"
+                 class="alert alert-danger">
+                  Name is required
+                </div>
+        </div>
+        <button class="btn btn-dark" (click)="addTask()" [disabled]="!addTaskForm.form.valid">Add Task</button>        
+    </form>
+</div>
+
+<div [hidden]="!submitted">
+    <p>Submitted Successfully! -> <span class="badge badge-dark">Task`s Info -> Id: {{task.id}} , Name: {{task.name}}</span></p>
+    <div class="btn-group btn-group-sm">
+        <button class="btn btn-secondary" (click)="newTask();addTaskForm.reset();">New Task</button>
+        <button class="btn btn-secondary" (click)="processTasks();">Process Tasks</button>
+    </div>
+    <div [hidden]="!processing">
+      <br>
+      <h5>Processing</h5>
+      <ul>
+         <li *ngFor="let task of tasks">
+             Task id = {{task.id}}, name = {{task.name}}
+         </li>
+      </ul>
+    </div>
+</div>
